@@ -24,7 +24,7 @@ const Login = () => {
 
   const onFinish = (data) => {
     axios
-      .post("/api/user/login", data, {
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`, data, {
         withCredentials: true,
       })
       .then((res) => {
