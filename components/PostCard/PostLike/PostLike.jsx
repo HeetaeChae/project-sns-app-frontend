@@ -68,16 +68,14 @@ const PostLike = ({ postId }) => {
       postId,
       user: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/like/getLike", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setLikeNum(res.data.likeNum);
-          setIsLike(res.data.isLike);
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/like/getLike", variables).then((res) => {
+      if (res.data.success) {
+        setLikeNum(res.data.likeNum);
+        setIsLike(res.data.isLike);
+      } else {
+        console.log(res.data.err);
+      }
+    });
   });
 
   const onClickAddLike = useCallback(() => {
@@ -88,21 +86,19 @@ const PostLike = ({ postId }) => {
       postId,
       user: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/like/addLike", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsLike(res.data.isLike);
-          if (res.data.isLike) {
-            setLikeNum(likeNum + 1);
-            addSuccess();
-          } else if (!res.data.isLike) {
-            setLikeNum(likeNum - 1);
-          }
-        } else {
-          console.log(res.data.err);
+    axios.post("/api/like/addLike", variables).then((res) => {
+      if (res.data.success) {
+        setIsLike(res.data.isLike);
+        if (res.data.isLike) {
+          setLikeNum(likeNum + 1);
+          addSuccess();
+        } else if (!res.data.isLike) {
+          setLikeNum(likeNum - 1);
         }
-      });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [postId, user.me._id]);
 
   return (

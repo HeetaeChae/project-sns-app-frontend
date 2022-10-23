@@ -53,9 +53,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       try {
-        const res = await axios("http://localhost:7000/api/user/getUser", {
-          withCredentials: true,
-        });
+        const res = await axios(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getUser`,
+          {
+            withCredentials: true,
+          }
+        );
         const payload = await res.data.doc;
         store.dispatch({ type: LOG_IN, payload });
       } catch (err) {

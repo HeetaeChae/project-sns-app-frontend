@@ -94,7 +94,7 @@ const Signup = () => {
     if (data.password !== data.passwordCheck) {
       return passwordCheckModal();
     }
-    axios.post("http://localhost:7000/api/user/signup", data).then((res) => {
+    axios.post("/api/user/signup", data).then((res) => {
       if (res.data.success) {
         setNickname(res.data.doc.nickname);
         setIsSuccessModal(true);

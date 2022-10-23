@@ -1,4 +1,4 @@
-import { Menu, Badge, Card } from "antd";
+import { Card } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import Follower from "./Follower/Follower";
 import Following from "./Following/Following";

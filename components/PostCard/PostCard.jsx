@@ -102,16 +102,14 @@ const PostCard = ({ post }) => {
   const deleteOk = () => {
     if (userId === writerId) {
       const variable = { postId: post._id };
-      axios
-        .post("http://localhost:7000/api/post/deletePost", variable)
-        .then((res) => {
-          if (res.data.success) {
-            deletePostSuccess();
-            dispatch({ type: DELETE_POST, payload: res.data.doc });
-          } else {
-            console.log(res.data.err);
-          }
-        });
+      axios.post("/api/post/deletePost", variable).then((res) => {
+        if (res.data.success) {
+          deletePostSuccess();
+          dispatch({ type: DELETE_POST, payload: res.data.doc });
+        } else {
+          console.log(res.data.err);
+        }
+      });
     } else {
       deletePostFailure();
     }
@@ -178,7 +176,9 @@ const PostCard = ({ post }) => {
             avatar={
               <Popover content={<PostFollow userTo={post.writer._id} />}>
                 {post.writer.image ? (
-                  <Avatar src={`http://localhost:7000/${post.writer.image}`} />
+                  <Avatar
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}/${post.writer.image}`}
+                  />
                 ) : (
                   <Avatar>{post.writer.nickname[0]}</Avatar>
                 )}

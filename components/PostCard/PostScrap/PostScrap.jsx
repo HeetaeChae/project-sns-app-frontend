@@ -72,15 +72,13 @@ const PostScrap = ({ postId, writer }) => {
       postId,
       user: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/scrap/getIsScrap", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsScrap(res.data.isScrap);
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/scrap/getIsScrap", variables).then((res) => {
+      if (res.data.success) {
+        setIsScrap(res.data.isScrap);
+      } else {
+        console.log(res.data.err);
+      }
+    });
   });
 
   const onClickAddScrap = useCallback(() => {
@@ -92,23 +90,21 @@ const PostScrap = ({ postId, writer }) => {
       user: user.me._id,
       writer,
     };
-    axios
-      .post("http://localhost:7000/api/scrap/addScrap", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsScrap(res.data.isScrap);
-          if (res.data.isScrap) {
-            addSuccess();
-            dispatch({ type: ADD_SCRAP_COUNT });
-          } else {
-            if (scrapCount > 0) {
-              dispatch({ type: SUBTRACT_SCRAP_COUNT });
-            }
-          }
+    axios.post("/api/scrap/addScrap", variables).then((res) => {
+      if (res.data.success) {
+        setIsScrap(res.data.isScrap);
+        if (res.data.isScrap) {
+          addSuccess();
+          dispatch({ type: ADD_SCRAP_COUNT });
         } else {
-          console.log(res.data.err);
+          if (scrapCount > 0) {
+            dispatch({ type: SUBTRACT_SCRAP_COUNT });
+          }
         }
-      });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [writer, user.me._id, postId]);
 
   return (

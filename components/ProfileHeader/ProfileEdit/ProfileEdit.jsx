@@ -62,17 +62,15 @@ const ProfileEdit = ({ me }) => {
       intro: data.intro,
       nickname: data.nickname,
     };
-    axios
-      .post("http://localhost:7000/api/user/editUser", variables)
-      .then((res) => {
-        if (res.data.success) {
-          dispatch({ type: LOG_IN, payload: res.data.doc });
-          setIsEdit(false);
-          profileEditSuccess();
-        } else {
-          profileEditFailure();
-        }
-      });
+    axios.post("/api/user/editUser", variables).then((res) => {
+      if (res.data.success) {
+        dispatch({ type: LOG_IN, payload: res.data.doc });
+        setIsEdit(false);
+        profileEditSuccess();
+      } else {
+        profileEditFailure();
+      }
+    });
   };
   return (
     <>

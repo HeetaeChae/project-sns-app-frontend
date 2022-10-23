@@ -70,15 +70,13 @@ const PostFollow = ({ userTo }) => {
       userTo,
       userFrom: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/follow/getFollow", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsFollow(res.data.isFollow);
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/follow/getFollow", variables).then((res) => {
+      if (res.data.success) {
+        setIsFollow(res.data.isFollow);
+      } else {
+        console.log(res.data.err);
+      }
+    });
   });
 
   const onClickAddFollow = useCallback(() => {
@@ -91,20 +89,18 @@ const PostFollow = ({ userTo }) => {
     } else if (variables.userTo === variables.userFrom) {
       return addFollowFailureMe();
     }
-    axios
-      .post("http://localhost:7000/api/follow/addFollow", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsFollow(res.data.isFollow);
-          if (res.data.isFollow) {
-            addFollowSuccess(res.data.doc.userTo.nickname);
-          } else {
-            addUnfollowSuccess(res.data.doc.userTo.nickname);
-          }
+    axios.post("/api/follow/addFollow", variables).then((res) => {
+      if (res.data.success) {
+        setIsFollow(res.data.isFollow);
+        if (res.data.isFollow) {
+          addFollowSuccess(res.data.doc.userTo.nickname);
         } else {
-          console.log(res.data.err);
+          addUnfollowSuccess(res.data.doc.userTo.nickname);
         }
-      });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [userTo, user.me._id]);
 
   return (

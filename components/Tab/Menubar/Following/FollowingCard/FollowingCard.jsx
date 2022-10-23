@@ -26,19 +26,17 @@ const FollowingCard = ({ following, setDeleteFollowing }) => {
       userTo: following.userTo._id,
       userFrom: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/follow/addFollow", variables)
-      .then((res) => {
-        if (res.data.success) {
-          //삭제면 isFollow가 false
-          if (!res.data.isFollow) {
-            deleteFollowingSuccess(res.data.doc.userTo.nickname);
-            setDeleteFollowing(res.data.doc._id);
-          }
-        } else {
-          console.log(res.data.err);
+    axios.post("/api/follow/addFollow", variables).then((res) => {
+      if (res.data.success) {
+        //삭제면 isFollow가 false
+        if (!res.data.isFollow) {
+          deleteFollowingSuccess(res.data.doc.userTo.nickname);
+          setDeleteFollowing(res.data.doc._id);
         }
-      });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, []);
 
   return (
@@ -54,7 +52,9 @@ const FollowingCard = ({ following, setDeleteFollowing }) => {
       >
         <List.Item.Meta
           avatar={
-            <Avatar src={`http://localhost:7000/${following.userTo.image}`} />
+            <Avatar
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}/${following.userTo.image}`}
+            />
           }
           title={following.userTo.nickname}
           description={following.userTo.email}

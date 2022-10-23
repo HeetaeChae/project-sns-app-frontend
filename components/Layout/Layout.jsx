@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Row, Col } from "antd";
-
 import Navbar from "./Navbar/Navar";
 import Footer from "./Footer/Footer";
 import Tab from "../Tab/Tab";

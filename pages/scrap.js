@@ -40,15 +40,13 @@ const Scrap = () => {
 
   useEffect(() => {
     const variable = { user: user.me._id };
-    axios
-      .post("http://localhost:7000/api/scrap/getScrap", variable)
-      .then((res) => {
-        if (res.data.success) {
-          setScraps([...res.data.doc]);
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/scrap/getScrap", variable).then((res) => {
+      if (res.data.success) {
+        setScraps([...res.data.doc]);
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [user]);
 
   console.log(scraps);
@@ -84,9 +82,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       try {
-        const res = await axios("http://localhost:7000/api/user/getUser", {
-          withCredentials: true,
-        });
+        const res = await axios(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getUser`,
+          {
+            withCredentials: true,
+          }
+        );
         const payload = await res.data.doc;
         store.dispatch({ type: LOG_IN, payload });
       } catch (err) {

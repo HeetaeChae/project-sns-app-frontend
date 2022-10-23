@@ -46,7 +46,7 @@ const PostComment = ({ comment, setDeletedCommentId }) => {
   const onDeleteComment = () => {
     if (userId === writerId) {
       axios
-        .post("http://localhost:7000/api/comment/deleteComment", {
+        .post("/api/comment/deleteComment", {
           commentId: comment._id,
         })
         .then((res) => {
@@ -74,7 +74,9 @@ const PostComment = ({ comment, setDeletedCommentId }) => {
         author={<a>{comment.writer.nickname}</a>}
         avatar={
           comment.writer.image ? (
-            <Avatar src={`http://localhost:7000/${comment.writer.image}`} />
+            <Avatar
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}/${comment.writer.image}`}
+            />
           ) : (
             <Avatar>{comment.writer.nickname[0]}</Avatar>
           )

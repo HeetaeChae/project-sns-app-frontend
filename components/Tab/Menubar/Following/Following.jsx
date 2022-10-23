@@ -13,15 +13,13 @@ const Following = () => {
   useEffect(() => {
     if (openFollowing) {
       const variable = { userId: user.me._id };
-      axios
-        .post("http://localhost:7000/api/follow/getFollowing", variable)
-        .then((res) => {
-          if (res.data.success) {
-            setFollowings([...res.data.doc]);
-          } else {
-            console.log(res.data.err);
-          }
-        });
+      axios.post("/api/follow/getFollowing", variable).then((res) => {
+        if (res.data.success) {
+          setFollowings([...res.data.doc]);
+        } else {
+          console.log(res.data.err);
+        }
+      });
     } else if (!openFollowing) {
       setFollowings([]);
     }

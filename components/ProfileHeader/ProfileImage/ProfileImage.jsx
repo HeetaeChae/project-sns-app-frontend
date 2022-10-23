@@ -54,7 +54,7 @@ const ProfileImage = ({ me }) => {
   const onDrop = (files) => {
     let formData = new FormData();
     formData.append("file", files[0]);
-    axios.post("http://localhost:7000/api/post/image", formData).then((res) => {
+    axios.post("/api/post/image", formData).then((res) => {
       if (res.data.success) {
         setImage(res.data.fileName);
         imageUploadSuccess();
@@ -71,21 +71,22 @@ const ProfileImage = ({ me }) => {
       _id: me._id,
       image,
     };
-    axios
-      .post("http://localhost:7000/api/user/editUser", variables)
-      .then((res) => {
-        if (res.data.success) {
-          dispatch({ type: LOG_IN, payload: res.data.doc });
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/user/editUser", variables).then((res) => {
+      if (res.data.success) {
+        dispatch({ type: LOG_IN, payload: res.data.doc });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [image, dispatch, me._id]);
 
   return (
     <ProfileImageWrapper>
       {image ? (
-        <Avatar size={200} src={`http://localhost:7000/${image}`} />
+        <Avatar
+          size={200}
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${image}`}
+        />
       ) : (
         <Avatar size={200} icon={<UserOutlined />} />
       )}

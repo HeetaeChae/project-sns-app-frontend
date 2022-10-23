@@ -86,7 +86,7 @@ const PostForm = () => {
       image: image,
       date: day(),
     };
-    axios.post("http://localhost:7000/api/post/addPost", data).then((res) => {
+    axios.post("/api/post/addPost", data).then((res) => {
       if (res.data.success) {
         addPostSuccess();
         setPostText("");

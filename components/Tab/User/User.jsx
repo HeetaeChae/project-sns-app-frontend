@@ -38,15 +38,13 @@ const User = () => {
 
   const handleOk = () => {
     setIsLogoutModal(false);
-    axios
-      .get("http://localhost:7000/api/user/logout", { withCredentials: true })
-      .then((res) => {
-        if (res.data.success) {
-          dispatch({ type: LOG_OUT });
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.get("/api/user/logout", { withCredentials: true }).then((res) => {
+      if (res.data.success) {
+        dispatch({ type: LOG_OUT });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   };
   const handleCancel = () => {
     setIsLogoutModal(false);
@@ -63,7 +61,7 @@ const User = () => {
           me.image ? (
             <Image
               alt="profileImage"
-              src={`http://localhost:7000/${me.image}`}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}/${me.image}`}
               width="100%"
               height="100%"
               layout="responsive"
@@ -110,7 +108,7 @@ const User = () => {
         <Meta
           avatar={
             me.image ? (
-              <Avatar src={`http://localhost:7000/${me.image}`} />
+              <Avatar src={`${process.env.NEXT_PUBLIC_BASE_URL}/${me.image}`} />
             ) : (
               <Avatar>{me.nickname[0]}</Avatar>
             )

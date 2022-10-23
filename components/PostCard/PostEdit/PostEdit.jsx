@@ -88,15 +88,13 @@ const PostEdit = ({ post, setIsEdit }) => {
         content: editText,
         image: editImage,
       };
-      axios
-        .post("http://localhost:7000/api/post/editPost", data)
-        .then((res) => {
-          if (res.data.success) {
-            dispatch({ type: EDIT_POST, payload: res.data.doc });
-          } else {
-            console.log(res.data);
-          }
-        });
+      axios.post("/api/post/editPost", data).then((res) => {
+        if (res.data.success) {
+          dispatch({ type: EDIT_POST, payload: res.data.doc });
+        } else {
+          console.log(res.data);
+        }
+      });
     };
     await editPost();
     //포스트 완료 메시지 띄움

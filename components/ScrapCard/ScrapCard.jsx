@@ -33,16 +33,14 @@ const ScrapCard = ({ scraps, setDeleteScrap }) => {
 
   const deleteScrap = (scrapId) => {
     const variable = { scrapId };
-    axios
-      .post("http://localhost:7000/api/scrap/deleteScrap", variable)
-      .then((res) => {
-        if (res.data.success) {
-          deleteScrapSuccess();
-          setDeleteScrap(scrapId);
-        } else {
-          console.l0g(res.data.err);
-        }
-      });
+    axios.post("/api/scrap/deleteScrap", variable).then((res) => {
+      if (res.data.success) {
+        deleteScrapSuccess();
+        setDeleteScrap(scrapId);
+      } else {
+        console.l0g(res.data.err);
+      }
+    });
   };
   if (scraps.length === 0) {
     return (
@@ -90,7 +88,7 @@ const ScrapCard = ({ scraps, setDeleteScrap }) => {
                 <Image
                   width={300}
                   alt="postImage"
-                  src={`http://localhost:7000/${scrap.postId.image[0]}`}
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}/${scrap.postId.image[0]}`}
                   unoptimized={true}
                   height={200}
                 />
@@ -102,7 +100,7 @@ const ScrapCard = ({ scraps, setDeleteScrap }) => {
                 avatar={
                   scrap.postId.writer.image ? (
                     <Avatar
-                      src={`http://localhost:7000/${scrap.postId.writer.image}`}
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}/${scrap.postId.writer.image}`}
                     />
                   ) : (
                     <Avatar>{scrap.postId.writer.nickname[0]}</Avatar>

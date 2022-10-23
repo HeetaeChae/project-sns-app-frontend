@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { Card, Button, Form, Input } from "antd";
 import { LoginOutlined, UserAddOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { logInRequest } from "../../../store/modules/user";
 import styled from "styled-components";
 import axios from "axios";
 import { LOG_IN } from "../../../store/modules/user";
@@ -25,7 +24,7 @@ const Login = () => {
 
   const onFinish = (data) => {
     axios
-      .post("http://localhost:7000/api/user/login", data, {
+      .post("/api/user/login", data, {
         withCredentials: true,
       })
       .then((res) => {

@@ -73,15 +73,13 @@ const PostComments = ({ postId }) => {
   //댓글 불러오기
   useEffect(() => {
     const variable = { postId };
-    axios
-      .post("http://localhost:7000/api/comment/getComment", variable)
-      .then((res) => {
-        if (res.data.success) {
-          setComments([...res.data.doc, ...comments]);
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/comment/getComment", variable).then((res) => {
+      if (res.data.success) {
+        setComments([...res.data.doc, ...comments]);
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [postId]);
 
   //댓글 삭제하기
@@ -100,17 +98,15 @@ const PostComments = ({ postId }) => {
       comment: text,
       date: day(),
     };
-    axios
-      .post("http://localhost:7000/api/comment/addComment", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setComments([res.data.doc, ...comments]);
-          setText("");
-          addCommentSuccess();
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/comment/addComment", variables).then((res) => {
+      if (res.data.success) {
+        setComments([res.data.doc, ...comments]);
+        setText("");
+        addCommentSuccess();
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [text, user.me._id, postId]);
 
   return (
@@ -120,7 +116,9 @@ const PostComments = ({ postId }) => {
         <div style={{ width: "100%" }}>
           <InputWrapper>
             {user.me.image ? (
-              <Avatar src={`http://localhost:7000/${user.me.image}`} />
+              <Avatar
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}/${user.me.image}`}
+              />
             ) : (
               <Avatar>{user.me.nickname[0]}</Avatar>
             )}

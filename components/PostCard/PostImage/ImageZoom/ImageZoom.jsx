@@ -41,7 +41,7 @@ const ImageZoom = ({ open, setOpen, image, editImage, setDeleteImage }) => {
           image.map((image) => (
             <ImageZoomWrapper key={image}>
               <Image
-                src={`http://localhost:7000/${image}`}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}/${image}`}
                 width="100%"
                 height="100%"
                 layout="responsive"

@@ -39,7 +39,7 @@ const PostImage = ({ image, edit }) => {
       <ImageWrapper>
         <Image
           alt="example"
-          src={`http://localhost:7000/${image}`}
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${image}`}
           width="100%"
         />
       </ImageWrapper>
@@ -47,14 +47,23 @@ const PostImage = ({ image, edit }) => {
   } else if (!edit && image.length === 2) {
     return (
       <ImageWrapper>
-        <Image alt="example" src={`http://localhost:7000/${image[0]}`} />
-        <Image alt="example" src={`http://localhost:7000/${image[1]}`} />
+        <Image
+          alt="example"
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${image[0]}`}
+        />
+        <Image
+          alt="example"
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${image[1]}`}
+        />
       </ImageWrapper>
     );
   } else {
     return (
       <ImageWrapper>
-        <Image alt="example" src={`http://localhost:7000/${image[0]}`} />
+        <Image
+          alt="example"
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${image[0]}`}
+        />
         <ImageZoomButtonWrapper>
           <Button onClick={() => setOpen(true)}>
             <PictureOutlined />더 보기

@@ -48,15 +48,13 @@ const FollowerCard = ({ follower }) => {
       userTo: follower.userFrom._id,
       userFrom: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/follow/getFollow", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsFollow(res.data.isFollow);
-        } else {
-          console.log(res.data.err);
-        }
-      });
+    axios.post("/api/follow/getFollow", variables).then((res) => {
+      if (res.data.success) {
+        setIsFollow(res.data.isFollow);
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [follower.userFrom._id, user.me._id]);
 
   const onClickAddFollow = useCallback(() => {
@@ -64,20 +62,18 @@ const FollowerCard = ({ follower }) => {
       userTo: follower.userFrom._id,
       userFrom: user.me._id,
     };
-    axios
-      .post("http://localhost:7000/api/follow/addFollow", variables)
-      .then((res) => {
-        if (res.data.success) {
-          setIsFollow(res.data.isFollow);
-          if (res.data.isFollow) {
-            addFollowSuccess(res.data.doc.userTo.nickname);
-          } else {
-            addUnfollowSuccess(res.data.doc.userTo.nickname);
-          }
+    axios.post("/api/follow/addFollow", variables).then((res) => {
+      if (res.data.success) {
+        setIsFollow(res.data.isFollow);
+        if (res.data.isFollow) {
+          addFollowSuccess(res.data.doc.userTo.nickname);
         } else {
-          console.log(res.data.err);
+          addUnfollowSuccess(res.data.doc.userTo.nickname);
         }
-      });
+      } else {
+        console.log(res.data.err);
+      }
+    });
   }, [follower.userFrom._id, user.me._id]);
 
   return (
@@ -103,7 +99,9 @@ const FollowerCard = ({ follower }) => {
       >
         <List.Item.Meta
           avatar={
-            <Avatar src={`http://localhost:7000/${follower.userFrom.image}`} />
+            <Avatar
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}/${follower.userFrom.image}`}
+            />
           }
           title={follower.userFrom.nickname}
           description={follower.userFrom.email}

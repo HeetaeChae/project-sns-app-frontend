@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Button, List, Modal, Avatar, Result } from "antd";
+import { Button, List, Modal, Result } from "antd";
 import FollowerCard from "./FollowerCard/FollowerCard";
 
 const Follower = () => {
@@ -12,15 +12,13 @@ const Follower = () => {
   useEffect(() => {
     if (openFollower) {
       const variable = { userId: user.me._id };
-      axios
-        .post("http://localhost:7000/api/follow/getFollower", variable)
-        .then((res) => {
-          if (res.data.success) {
-            setFollowers([...res.data.doc]);
-          } else {
-            console.log(res.data.err);
-          }
-        });
+      axios.post("/api/follow/getFollower", variable).then((res) => {
+        if (res.data.success) {
+          setFollowers([...res.data.doc]);
+        } else {
+          console.log(res.data.err);
+        }
+      });
     } else if (!openFollower) {
       setFollowers([]);
     }
